@@ -2,29 +2,29 @@
     'use strict';
 
     angular.module('ngImgMap', [])
-    
-    .factory('ngImgMapCurArea', ['$document', function($document){
+
+    .factory('ngImgMapCurArea', ['$document', function($document) {
 
         // 全局唯一的"当前编辑区域"
         var curArea = {
             area: undefined,
             mouse: [0, 0],
             action: undefined
-        }
+        };
 
         // 翻折判断，更新坐标点
-        function _updateCoords(coords){
+        function _updateCoords(coords) {
             var me = this;
             if (coords[0] > coords[2]) { _exchange(coords, 0, 2) };
             if (coords[1] > coords[3]) { _exchange(coords, 1, 3) };
-        };
+        }
 
         // 交换选手
-        function _exchange(item, a, b){
-            var tmp = item[a]; 
-            item[a] = item[b]; 
+        function _exchange(item, a, b) {
+            var tmp = item[a];
+            item[a] = item[b];
             item[b] = tmp;
-        };
+        }
 
         // 在任何地方鼠标抬起，都释放操作节点
         $document.find('body').on('mouseup', function releaseArea(e){
@@ -32,10 +32,10 @@
             // e.stopPropagation();
             if (angular.isDefined(curArea.area)) {
                 _updateCoords(curArea.area.coords);
-                delete curArea.area['isDraging'];
+                delete curArea.area.isDraging;
                 curArea.area = undefined;
-            };
-        })
+            }
+        });
 
         return curArea;
 
@@ -43,7 +43,7 @@
 
     .factory('ngImgMapCalculation', ['$timeout',function($timeout){
 
-        var calculation = function(img, can){
+        var calculation = function(img, can) {
             // 偏移量
             this.dx = 0;
             this.dy = 0;
@@ -57,11 +57,11 @@
             this.canw = Math.min(img[0], can[0]);
 
             // 画布像素 相对于 实际像素 形变系数
-            this.ratio = (img[0] && this.canw)? (this.canw / img[0]) : 1;
-        }
+            this.ratio = (img[0] && this.canw) ? (this.canw / img[0]) : 1;
+        };
 
         // 实例初始化
-        calculation.prototype.init = function(action, curArea, pos){
+        calculation.prototype.init = function (action, curArea, pos) {
             var me = this;
 
             // 计算偏移位
@@ -264,8 +264,8 @@
             $scope.wrapperStyle = (function(){
                 var can = calculation.img;
                 return {
-                    'width' : can[0] * ratio,
-                    'height': can[1] * ratio,
+                    'width' : can[0] * ratio + 'px',
+                    'height': can[1] * ratio + 'px',
                     'background-image': 'url(' + m.pic_url + ')'
                 };
             })();
@@ -316,10 +316,10 @@
         $scope.getAreaStyle = function(area){
             var coords = area.coords || [10,10,50,50];
             return {
-                width : parseInt(Math.abs(coords[0] - coords[2]) * ratio),
-                height: parseInt(Math.abs(coords[1] - coords[3]) * ratio),
-                left  : parseInt(Math.min(coords[0], coords[2]) * ratio),
-                top   : parseInt(Math.min(coords[1], coords[3]) * ratio)
+                width : parseInt(Math.abs(coords[0] - coords[2]) * ratio) + 'px',
+                height: parseInt(Math.abs(coords[1] - coords[3]) * ratio) + 'px',
+                left  : parseInt(Math.min(coords[0], coords[2]) * ratio) + 'px',
+                top   : parseInt(Math.min(coords[1], coords[3]) * ratio) + 'px'
             };
         };
 

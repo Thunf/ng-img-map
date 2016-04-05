@@ -1,0 +1,177 @@
+// resize
+body{
+    font-size: 12px;
+    * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    *:before,
+    *:after {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+}
+// 图片锚点编辑器样式
+.img-map-wrapper{
+    position: relative;
+    width: 100%;
+    // overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    text-align: left;
+    line-height: 1.5;
+    margin: 0 auto;
+    font-size: 12px;
+
+    .map-wrapper{
+        width: 100%;
+        height: 100%;
+    }
+
+    .map-area{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.3);
+
+        &:hover{
+            .bar-remove{
+                display: block;
+            }
+        }
+    }
+
+    @map-img-src: '../images/antline.gif';
+    @map-drag-red: red;
+    @map-drag-zindex: 110;
+
+    .draging {
+        z-index: @map-drag-zindex + 1000;
+
+        .dragline:before{
+            border-color: transparent !important;
+            background: #fff url(@map-img-src);
+        }
+
+        .dragbar{
+            .bar-coords{
+                display: block;
+            }
+            .bar-remove{
+                display: none;
+            }
+        }
+    }
+
+    .dragline, 
+    .dragdot{
+        position: absolute;
+        opacity: 0.5;
+        filter: alpha(opacity=50);
+    }
+
+    .dragline{
+        z-index: @map-drag-zindex + 1;
+
+        &.ord-n, &.ord-e, &.ord-s, &.ord-w{
+            &:before{
+                content: '';
+                position: absolute;
+                border-top: 1px dashed #333;
+                border-left: 1px dashed #333;
+            }
+        }
+        
+        &.ord-n{
+            cursor: n-resize; 
+            width: 100%; height: 8px; 
+            top: -4px; left: 0;
+            &:before{width: 100%; height: 1px; top: 4px;}
+        } 
+        &.ord-e{
+            cursor: e-resize; 
+            width: 8px; height: 100%; 
+            right: -4px; top: 0;
+            &:before{width: 1px; height: 100%; right: 4px;}
+        }
+        &.ord-s{
+            cursor: s-resize; 
+            width: 100%; height: 8px; 
+            bottom: -4px; left: 0;
+            &:before{width: 100%; height: 1px; bottom: 4px; }
+        }
+        &.ord-w{
+            cursor: w-resize; 
+            width: 8px; height: 100%; 
+            left: -4px; top: 0;
+            &:before{width: 1px; height: 100%; left: 4px;}
+        }
+    }
+
+    .dragdot{
+        background-color: #ccc;
+        border: 1px solid #333;
+        width: 8px;
+        height: 8px;
+        font-size: 0;
+
+        &.ord-n, &.ord-e, &.ord-w, &.ord-s{z-index: @map-drag-zindex; }
+        &.ord-nw, &.ord-ne, &.ord-sw, &.ord-se{z-index: @map-drag-zindex + 2; }
+
+        &.ord-n{top:    -4px; left: 50%; margin-left: -4px; }
+        &.ord-s{bottom: -4px; left: 50%; margin-left: -4px; }
+        &.ord-e{right: -4px; top: 50%; margin-top: -4px; }
+        &.ord-w{left:  -4px; top: 50%; margin-top: -4px; }
+
+        &.ord-nw{cursor: nw-resize; top: -4px; left:  -4px; }
+        &.ord-ne{cursor: ne-resize; top: -4px; right: -4px; }
+        &.ord-sw{cursor: sw-resize; bottom: -4px; left:  -4px; }
+        &.ord-se{cursor: se-resize; bottom: -4px; right: -4px; }
+    }
+
+    .dragbar{
+        .bar-title,
+        .bar-coords,
+        .bar-remove{
+            position: absolute;
+            height: 1.5em;
+            width: 1.5em;
+            top: 0;
+            color: #fff;
+            text-align: center;
+        }
+        .bar-title{
+            left: 0;
+            background: @map-drag-red;
+            border-radius: 0 0 2px 0;
+        }
+        .bar-coords{
+            display: none;
+            top: -1.5em;
+            right: 0;
+            width: auto;
+            padding: 0 .5em;
+            color: #51F751;
+            background: rgba(0,0,0,.3);
+            white-space: nowrap;
+        }
+        .bar-remove{
+            display: none;
+            right: -1em;
+            width: 1em;
+            height: 1em;
+            line-height: 1;
+            font-size: 18px;
+            border-radius: 0 2px 2px 0;
+            background: @map-drag-red;
+            cursor: pointer;
+            &:hover{
+                background: darken(@map-drag-red, 10%);
+            }
+        }
+    }   
+}

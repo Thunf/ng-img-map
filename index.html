@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DEMO - ngImgMap</title>
+    <link rel="stylesheet" href="compile/ng-img-map.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
+    <script src="compile/ng-img-map.min.js"></script>
+</head>
+
+<body ng-app="ngImgMapDemo" ng-controller="DemoCtrl" style="text-align:center; padding: 20px;">
+
+    <div ng-img-map ng-img-map-fns="mapFns" ng-model="img"></div>
+
+    <button ng-click="addArea(img)" style="margin-top: 20px;">add area</button>
+
+    <script type="text/javascript">
+    (function() {
+        var app = angular.module('ngImgMapDemo', ['ngImgMap']);
+
+        app.controller('DemoCtrl', function($scope) {
+
+            // 最基础的数据格式如下
+            $scope.img = {
+                "pic_url": "images/demo-400x300.png",
+                "maps": [
+                    {"coords":[32,19,202,296]},
+                    {"coords":[214,19,376,300]}
+                ]
+            };
+
+            // 配置方法集
+            $scope.mapFns = {
+                // 获取画布尺寸
+                getCanSize: function() {
+                    return [950, 1000];
+                },
+                // 获取图像尺寸
+                getImgSize: function(img) {
+                    return _getImgSize(img.pic_url) || [950, 500];
+                }
+            };
+
+            // 获取图片宽高
+            function _getImgSize(url) {
+                var reg = new RegExp('(\\d+)x(\\d+)\.');
+                result = reg.exec(url);
+                if (result && result.length > 1) {
+                    return result.slice(1);
+                } else {
+                    return false;
+                }
+            }
+
+            // 添加锚点
+            $scope.addArea = function(img) {
+                if (!img || !img.maps || !angular.isArray(img.maps)) {
+                    img = angular.isObject(img) ? img : {};
+                    img.maps = [];
+                };
+                var calculation = img.getCalculation(),
+                    lastImg = img.maps.slice(-1)[0],
+                    lastImgLeft = lastImg ? lastImg.coords[0] : 0,
+                    lastImgTop = lastImg ? lastImg.coords[1] : 0,
+                    newImgCoords = [lastImgLeft + 30, lastImgTop + 30, lastImgLeft + 100, lastImgTop + 100];
+
+                if (calculation) {
+                    img.maps.push({coords: calculation.checkCoords(newImgCoords) });
+                } else {
+                    img.maps.push({coords: newImgCoords });
+                }
+            };
+
+        });
+
+    })();
+    </script>
+</body>
+
+</html>
