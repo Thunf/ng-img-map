@@ -8,19 +8,45 @@
     <script src="compile/ng-img-map.min.js"></script>
 </head>
 
-<body ng-app="ngImgMapDemo" ng-controller="DemoCtrl" style="padding: 20px;">
+<body ng-app="ngImgMapDemo" ng-controller="DemoCtrl" style="min-width:1200px;">
 
-    <div ng-img-map ng-img-map-fns="mapFns" ng-model="img"></div>
-
-    <div style="width:400px;margin:auto;">
-        <button ng-click="addArea(img)" style="margin-top: 20px;">add area</button>
-        <dl>
-            <dt>custom attr in data, such as 'description'</dt>
-            <dd ng-repeat="m in img.maps" style="margin: 5px 0;">
-                area {{$index+1}}: <input type="text" ng-model="m.description" ng-focus="catchArea(m)" ng-blur="releaseArea(m)" />
-            </dd>
-        </dl>
+    <div style="float:right;width:600px;padding:20px;">
+        <div>Live Data</div>
+        <pre>{{imgJson}}</pre>
     </div>
+
+    <div style="min-width:600px;padding:30px 600px 0 0;">
+        <div ng-img-map ng-img-map-fns="mapFns" ng-model="img"></div>
+
+        <div style="width:400px;margin:auto;">
+            <button ng-click="addArea(img)" style="margin-top: 20px;">add area</button>
+            <dl>
+                <dt>custom attr in data, such as 'description'</dt>
+                <dd ng-repeat="m in img.maps" style="margin: 5px 0;">
+                    area {{$index+1}}: 
+                    <input type="text" ng-model="m.description" ng-focus="catchArea(m)" ng-blur="releaseArea(m)" />
+                    <input type="text" ng-model="m.link_url" ng-focus="catchArea(m)" ng-blur="releaseArea(m)" />
+                </dd>
+            </dl>
+        </div>
+
+        <div style="text-align:center;margin-top:50px;">
+            <h3>使用实例：点击对应man的head ~</h3>
+            <div>
+                <img ng-src="{{img.pic_url}}" usemap="#ImgExam">
+                <map name="ImgExam">
+                    <area style="outline: red solid 2px;"
+                          shape="rect" coords="{{area.coords.join()}}"
+                          ng-repeat="area in img.maps" 
+                          ng-href="{{area.link_url || 'javascript:void(0)'}}" 
+                          title="{{area.description}}" 
+                          target="_blank"></area>
+                </map>
+            </div>
+        </div>
+        
+    </div>
+
 
     <script type="text/javascript">
     (function() {
@@ -34,10 +60,12 @@
             $scope.img = {
                 "pic_url": "images/demo-400x300.png",
                 "maps": [
-                    {"coords":[32,19,202,296], "description": "I am batman"},
-                    {"coords":[214,19,376,300], "description": "I am superman"}
+                    {"coords":[45, 52, 160, 216], "description": "I am batman", "link_url": "https://www.baidu.com/s?ie=utf-8&fr=bks0000&wd=BATMAN"},
+                    {"coords":[242, 19, 343,169], "description": "I am superman", "link_url": "https://www.baidu.com/s?ie=utf-8&fr=bks0000&wd=SUPERMAN"}
                 ]
             };
+
+
 
             // ================= 必须配置 =================
 
@@ -94,6 +122,11 @@
                     delete area.isDraging
                 };
             };
+
+            // ================== imgJson ===================
+            $scope.$watch('img', function(nVal, oVal){
+                $scope.imgJson = angular.toJson(nVal, true);
+            }, true);
 
         });
 

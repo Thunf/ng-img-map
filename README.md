@@ -66,7 +66,7 @@ var myAppModule = angular.module('MyApp', ['ngImgMap']);
 }
 ```
 - pic_url：string，原始图片地址
-- maps：array，相对原始图片像素大小的锚点坐标[x1,y1,x2,y2]，参考<area>的coords属性
+- maps：array，相对原始图片像素大小的锚点坐标[x1, y1, x2, y2]，参考`<area>`标签的coords属性
 
 ### 方法集格式
 
