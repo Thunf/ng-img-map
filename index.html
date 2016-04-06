@@ -8,11 +8,19 @@
     <script src="compile/ng-img-map.min.js"></script>
 </head>
 
-<body ng-app="ngImgMapDemo" ng-controller="DemoCtrl" style="text-align:center; padding: 20px;">
+<body ng-app="ngImgMapDemo" ng-controller="DemoCtrl" style="padding: 20px;">
 
     <div ng-img-map ng-img-map-fns="mapFns" ng-model="img"></div>
 
-    <button ng-click="addArea(img)" style="margin-top: 20px;">add area</button>
+    <div style="width:400px;margin:auto;">
+        <button ng-click="addArea(img)" style="margin-top: 20px;">add area</button>
+        <dl>
+            <dt>custom attr in data, such as 'description'</dt>
+            <dd ng-repeat="m in img.maps" style="margin: 5px 0;">
+                area {{$index+1}}: <input type="text" ng-model="m.description" ng-focus="catchArea(m)" ng-blur="releaseArea(m)" />
+            </dd>
+        </dl>
+    </div>
 
     <script type="text/javascript">
     (function() {
@@ -20,14 +28,18 @@
 
         app.controller('DemoCtrl', function($scope) {
 
-            // 最基础的数据格式如下
+            // ================= 必须配置 =================
+
+            // 最基础的数据格式如下, description为自定义属性
             $scope.img = {
                 "pic_url": "images/demo-400x300.png",
                 "maps": [
-                    {"coords":[32,19,202,296]},
-                    {"coords":[214,19,376,300]}
+                    {"coords":[32,19,202,296], "description": "I am batman"},
+                    {"coords":[214,19,376,300], "description": "I am superman"}
                 ]
             };
+
+            // ================= 必须配置 =================
 
             // 配置方法集
             $scope.mapFns = {
@@ -69,6 +81,18 @@
                 } else {
                     img.maps.push({coords: newImgCoords });
                 }
+            };
+
+            // =================== 优化功能 ===================
+
+            // 编辑link时，激活对应选区
+            $scope.catchArea = function(area){area.isDraging = true;};
+
+            // 离开编辑link时，反激活对应选区
+            $scope.releaseArea = function(area){
+                if (area.hasOwnProperty('isDraging')) {
+                    delete area.isDraging
+                };
             };
 
         });

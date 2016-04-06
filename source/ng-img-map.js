@@ -226,7 +226,7 @@
             m  = $scope.m = $scope.ngModel;
 
             if (angular.isUndefined(m)) {
-                return console.warn("ngImgMap need correct ngModel !");
+                return console.warn("ngImgMap need correct ngModel, please check data & format!");
             };
 
             // ============= 这里需要加判断 =============
@@ -350,7 +350,8 @@
                         +'        <div class="dragbar">'
                         +'            <div class="bar-title">{{$index+1}}</div>'
                         +'            <div class="bar-remove" ng-click="removeArea(m.maps, $index)">&times;</div>'
-                        +'            <div class="bar-coords">{{area.coords}} {{getCurSize(area.coords)}}</div>'
+                        +'            <div class="bar-size">{{getCurSize(area.coords)}}</div>'
+                        +'            <div class="bar-coords">{{area.coords}}</div>'
                         +'        </div>'
                         +'        <div class="ord-n dragline"></div>'
                         +'        <div class="ord-e dragline"></div>'

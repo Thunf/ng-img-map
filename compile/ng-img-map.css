@@ -40,7 +40,8 @@ body *:after {
   border-color: transparent !important;
   background: #fff url('../images/antline.gif');
 }
-.img-map-wrapper .draging .dragbar .bar-coords {
+.img-map-wrapper .draging .dragbar .bar-coords,
+.img-map-wrapper .draging .dragbar .bar-size {
   display: block;
 }
 .img-map-wrapper .draging .dragbar .bar-remove {
@@ -171,6 +172,7 @@ body *:after {
   bottom: -4px;
   right: -4px;
 }
+.img-map-wrapper .dragbar .bar-size,
 .img-map-wrapper .dragbar .bar-title,
 .img-map-wrapper .dragbar .bar-coords,
 .img-map-wrapper .dragbar .bar-remove {
@@ -186,15 +188,24 @@ body *:after {
   background: red;
   border-radius: 0 0 2px 0;
 }
-.img-map-wrapper .dragbar .bar-coords {
+.img-map-wrapper .dragbar .bar-coords,
+.img-map-wrapper .dragbar .bar-size {
   display: none;
-  top: -1.5em;
-  right: 0;
   width: auto;
-  padding: 0 .5em;
-  color: #51F751;
-  background: rgba(0, 0, 0, 0.3);
+  padding: 0 1em;
+  color: #FFF;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
   white-space: nowrap;
+}
+.img-map-wrapper .dragbar .bar-coords {
+  top: auto;
+  bottom: -1.6em;
+  right: 0;
+}
+.img-map-wrapper .dragbar .bar-size {
+  top: -1.6em;
+  left: 0;
 }
 .img-map-wrapper .dragbar .bar-remove {
   display: none;
