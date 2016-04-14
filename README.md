@@ -48,23 +48,23 @@ var myAppModule = angular.module('MyApp', ['ngImgMap']);
 
 1、在HTML文件中，添加 `<ng-img-map>` 或具有 `ng-img-map` 属性的标签。
 
-    Add the directive which looks like `<ng-img-map>` or `<x ng-img-map></x>` to HTML file.
+- Add the directive which looks like `<ng-img-map>` or `<x ng-img-map></x>` to HTML file.
 
 2、给该标签绑定图像数据（ng-model="imgdata"），指令将自动获取图像数据（[数据格式](#数据格式)），并监测数据是否更新。
 
-    Bind the directive to image data (using `ng-model="imgdata"`), The directive will get the image data from that ng-model and watch for updates.
+- Bind the directive to image data (using `ng-model="imgdata"`), The directive will get the image data from that ng-model and watch for updates.
 
 3、给该标签绑定预设方法（ng-img-map-fns="mapFns"），指令将使用方法集中对应的方法获取参数（[方法集格式](#方法集格式)）。每次监测到数据更改都会调用方法集初始生成器。
 
-    Bind the directive to image functions (using `ng-img-map-fns="mapFns"`), The directive will get the image functions from that ng-img-map-fns and run it automatically.
+- Bind the directive to image functions (using `ng-img-map-fns="mapFns"`), The directive will get the image functions from that ng-img-map-fns and run it automatically.
 
 4、根据个人需求，给数据加入自定义字段
 
-    According to individual needs, to add custom fields to the data
+- According to individual needs, to add custom fields to the data
 
 5、玩吧~
 
-    You get it ~
+- You get it ~
 
 ## Attribution
 
@@ -118,8 +118,7 @@ For each picture, it will generator an exclusive function which can get this cal
 
 :exclamation: 在添加新区域时，需调用 calculation.checkCoords() 来修正坐标位，以确保坐标位于可视画布区域内，否则将导致热点无法正确移动。 
 
-    When adding a new data, you'd better to use `calculation.checkCoords` to correcte coords data. 
-    To make sure that the coords are located within the visible canvas area, otherwise it will cause the area to move in an unexpected way.
+- When adding a new data, you'd better to use `calculation.checkCoords` to correcte coords data. To make sure that the coords are located within the visible canvas area, otherwise it will cause the area to move in an unexpected way.
 
 
 ## Attention
